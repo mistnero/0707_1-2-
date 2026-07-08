@@ -53,13 +53,19 @@ void Screen::Init(HWND hwnd, int width, int height)
 		&m_dc);
 
 	////バックバッファの取得
-	ID3D11Texture2D* backBuffer;
+	ID3D11Texture2D* backBuffer = nullptr;
 	//スワップチェインからバックバッファを取得
-	m_sc->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backBuffer);
+	HRESULT hr = m_sc->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backBuffer);
+	//バックバッファの取得に失敗した場合
+	if (FAILED(hr))
+	{
+		std::cerr << "Failed to get back buffer" << std::endl;
+		return;
+	}
 	//レンダーターゲットビューの作成
-	m_device->CreateRenderTargetView(backBuffer, NULL, &m_rtv);
+	m_device->CreateRenderTargetView(backBuffer, nullptr, &m_rtv);
 	//描画先の設定
-	m_dc->OMSetRenderTargets(1, &m_rtv, NULL);
+	m_dc->OMSetRenderTargets(1, &m_rtv, nullptr);
 	//バックバッファの解放
 	backBuffer->Release();
 
