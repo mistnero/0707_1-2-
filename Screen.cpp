@@ -8,13 +8,40 @@
 
 #include "Screen.h"
 
-void Screen::Init(HWND hwnd, int width, int height)
+
+//コンストラクタ
+Screen::Screen()
+{
+	//nullptrで開始時に初期化
+	m_hwnd = nullptr;
+	m_device = nullptr;
+	m_dc = nullptr;
+	m_sc = nullptr;
+	m_rtv = nullptr;
+
+}
+
+//デストラクタ
+Screen::~Screen()
+{
+	//解放
+	if (m_rtv) m_rtv->Release();
+	if (m_sc) m_sc->Release();
+	if (m_dc) m_dc->Release();
+	if (m_device) m_device->Release();
+}
+
+//初期化（ウィンドウ生成後）
+bool Screen::Init(HWND hwnd)
 {
 	//ウィンドウハンドルの保存
 	m_hwnd = hwnd;
-	//ウィンドウサイズの保存
-	m_width = width;
-	m_height = height;
+	////ウィンドウサイズの保存
+	//m_width = width;
+	//m_height = height;
+	
+	
+
 	////スワップチェインの設定
 	DXGI_SWAP_CHAIN_DESC scd = {};
 	//バッファ数の設定
@@ -38,6 +65,7 @@ void Screen::Init(HWND hwnd, int width, int height)
 	//ウィンドウモードの動作設定
 	scd.Windowed = TRUE;
 	//デバイスとスワップチェインの作成
+	HRESULT hr = 
 	D3D11CreateDeviceAndSwapChain(
 		NULL,
 		D3D_DRIVER_TYPE_HARDWARE,
@@ -51,35 +79,52 @@ void Screen::Init(HWND hwnd, int width, int height)
 		&m_device,
 		NULL,
 		&m_dc);
+	//失敗した場合
+	if (FAILED(hr))
+	{
+		std::cerr << "Failed to create d and sc" << std::endl;
+		return false;
+	}
 
 	////バックバッファの取得
 	ID3D11Texture2D* backBuffer = nullptr;
 	//スワップチェインからバックバッファを取得
-	HRESULT hr = m_sc->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backBuffer);
+	hr = m_sc->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backBuffer);
 	//バックバッファの取得に失敗した場合
 	if (FAILED(hr))
 	{
 		std::cerr << "Failed to get back buffer" << std::endl;
-		return;
+		return false;
 	}
 	//レンダーターゲットビューの作成
-	m_device->CreateRenderTargetView(backBuffer, nullptr, &m_rtv);
+	hr = m_device->CreateRenderTargetView(backBuffer, nullptr, &m_rtv);
+	//RTVの作成に失敗した場合
+	if (FAILED(hr))
+	{
+		std::cerr << "Failed to create rtv" << std::endl;
+		backBuffer->Release();
+		return false;
+	}
 	//描画先の設定
 	m_dc->OMSetRenderTargets(1, &m_rtv, nullptr);
 	//バックバッファの解放
 	backBuffer->Release();
 
+	//クライアント領域の取得
+	RECT rc;
+	GetClientRect(m_hwnd, &rc);
+
 	////ビューポートの設定
-	D3D11_VIEWPORT vp;
-	//サイズの設定
-	vp.Width = (FLOAT)m_width;
-	vp.Height = (FLOAT)m_height;
+	D3D11_VIEWPORT vp = {};
+	//左上の座標の設定
+	vp.TopLeftX = 0.0f;
+	vp.TopLeftY = 0.0f;
+	//サイズの設定（ウィンドウサイズ）
+	vp.Width = static_cast<float>(rc.right - rc.left);
+	vp.Height = static_cast<float>(rc.bottom - rc.top);
 	//深度の設定
 	vp.MinDepth = 0.0f;
 	vp.MaxDepth = 1.0f;
-	//左上の座標の設定
-	vp.TopLeftX = 0;
-	vp.TopLeftY = 0;
 	//描画領域を設定
 	m_dc->RSSetViewports(1, &vp);
 

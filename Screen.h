@@ -14,32 +14,26 @@ class Screen
 {
 private:
 	//コンストラクタ
-	Screen(){}
+	Screen();
 
 	//ウィンドウハンドル
-	HWND m_hwnd = nullptr;
-	//ウィンドウサイズ
-	int m_width = 0;
-	int m_height = 0;
+	HWND m_hwnd;
+	////ウィンドウサイズ
+	//int m_width = 0;
+	//int m_height = 0;
 
 	//デバイス/デバイスコンテキスト
-	ID3D11Device* m_device = nullptr;
-	ID3D11DeviceContext* m_dc = nullptr;
+	ID3D11Device* m_device;
+	ID3D11DeviceContext* m_dc;
 	//スワップチェイン
-	IDXGISwapChain* m_sc = nullptr;
+	IDXGISwapChain* m_sc;
 	//レンダーターゲットビュー
-	ID3D11RenderTargetView* m_rtv = nullptr;
+	ID3D11RenderTargetView* m_rtv;
 
 public:
 	//デストラクタ
-	~Screen()
-	{
-		//解放
-		if (m_rtv) m_rtv->Release();
-		if (m_sc) m_sc->Release();
-		if (m_dc) m_dc->Release();
-		if (m_device) m_device->Release();
-	}
+	~Screen();
+	
 
 	//明示的な禁止
 	Screen(const Screen&) = delete;
@@ -52,8 +46,8 @@ public:
 		return instance;
 	}
 
-	//初期化
-	void Init(HWND hwnd, int width, int height);
+	//初期化（ウィンドウ生成後）
+	bool Init(HWND hwnd);
 	
 	//ループの先頭
 	void FirstLoop();
