@@ -6,6 +6,7 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
 
+//スクリーンヘッダーをインクルード
 #include "Screen.h"
 
 
@@ -102,6 +103,7 @@ bool Screen::Init(HWND hwnd)
 	if (FAILED(hr))
 	{
 		std::cerr << "Failed to create rtv" << std::endl;
+		//解放してから返す
 		backBuffer->Release();
 		return false;
 	}
