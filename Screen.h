@@ -50,7 +50,7 @@ public:
 	bool Init(HWND hwnd);
 	
 	//ループの先頭
-	void FirstLoop();
+	void FirstLoop(float col[]);
 	//ループの最後
 	void FinalLoop();
 

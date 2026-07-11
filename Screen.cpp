@@ -132,10 +132,10 @@ bool Screen::Init(HWND hwnd)
 
 }
 
-void Screen::FirstLoop()
+void Screen::FirstLoop(float col[])
 {
 	//•`‰æF‚ÌÝ’è
-	float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	float clearColor[4] = { col[0], col[1], col[2], col[3] };
 	//•`‰æF‚ÅƒNƒŠƒA
 	m_dc->ClearRenderTargetView(m_rtv, clearColor);
 }

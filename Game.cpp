@@ -14,6 +14,7 @@
 Game::Game()
 {
 	this->m_hwnd = nullptr;
+
 }
 
 //デストラクタ
@@ -70,7 +71,7 @@ int Game::Loop(MSG msg)
 		}
 		else
 		{
-			Screen::GetInstance().FirstLoop();
+			Screen::GetInstance().FirstLoop(color);
 
 
 			Screen::GetInstance().FinalLoop();

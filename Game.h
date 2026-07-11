@@ -22,6 +22,9 @@ private:
 	//ウィンドウハンドル
 	HWND m_hwnd;
 
+	//後で消す
+	float color[4] = { 0.0f,0.0f,0.0f,1.0f };
+
 public:
 	//デストラクタ
 	~Game();
