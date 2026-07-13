@@ -64,7 +64,7 @@ public:
 			//ƒvƒŒƒC‰æ–Ê
 			ScenePlay::GetInstance().Update();
 			this->color = ScenePlay::GetInstance().ColorReturn();
-			if (KeySignal::GetInstance().PushKey(VK_RETURN))
+			if (KeySignal::GetInstance().PushKey(VK_SPACE))
 			{
 				this->scene_num = 2;
 			}
