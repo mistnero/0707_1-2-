@@ -30,6 +30,9 @@ private:
 	//レンダーターゲットビュー
 	ID3D11RenderTargetView* m_rtv;
 
+	//色
+	float* color;
+
 public:
 	//デストラクタ
 	~Screen();

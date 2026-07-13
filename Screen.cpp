@@ -6,6 +6,8 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
 
+#include "SceneManage.h"
+
 //スクリーンヘッダーをインクルード
 #include "Screen.h"
 
@@ -19,6 +21,8 @@ Screen::Screen()
 	m_dc = nullptr;
 	m_sc = nullptr;
 	m_rtv = nullptr;
+
+	
 
 }
 
@@ -134,10 +138,13 @@ bool Screen::Init(HWND hwnd)
 
 void Screen::FirstLoop(float col[])
 {
-	//描画色の設定
-	float clearColor[4] = { col[0], col[1], col[2], col[3] };
+	SceneManage::GetInstance().SceneUpdate();
+//	SceneManage::GetInstance().SceneDraw();
+
+	this->color = SceneManage::GetInstance().SCReturn();
+
 	//描画色でクリア
-	m_dc->ClearRenderTargetView(m_rtv, clearColor);
+	m_dc->ClearRenderTargetView(m_rtv, this->color);
 }
 
 void Screen::FinalLoop()
