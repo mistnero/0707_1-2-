@@ -45,7 +45,26 @@ public:
 		static Screen instance;
 		return instance;
 	}
-
+	//デバイスの取得
+	ID3D11Device* GetDevice()
+	{
+		return m_device;
+	}
+	//コンテキスト
+	ID3D11DeviceContext* GetDC()
+	{
+		return m_dc;
+	}
+	//スワップチェイン
+	IDXGISwapChain* GetSC()
+	{
+		return m_sc;
+	}
+	//レンダーターゲットの取得
+	ID3D11RenderTargetView* GetRTV()
+	{
+		return m_rtv;
+	}
 	//初期化（ウィンドウ生成後）
 	bool Init(HWND hwnd);
 	

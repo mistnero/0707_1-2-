@@ -3,8 +3,17 @@
 #include <d3d11.h>
 #include <dxgi.h>
 
+//追加で必要なインクルード
+#include <d2d1.h>
+#include <dwrite.h>
+
+
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
+
+//
+#pragma comment(lib,"d2d1.lib")
+#pragma comment(lib,"dwrite.lib")
 
 //スクリーンヘッダーをインクルード
 #include "Screen.h"
