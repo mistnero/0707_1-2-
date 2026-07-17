@@ -45,16 +45,17 @@ public:
 		static Screen instance;
 		return instance;
 	}
+	//ウィンドウハンドルの取得
+	HWND GetHWND()
+	{
+		return m_hwnd;
+	}
 	//デバイスの取得
 	ID3D11Device* GetDevice()
 	{
 		return m_device;
 	}
-	//コンテキスト
-	ID3D11DeviceContext* GetDC()
-	{
-		return m_dc;
-	}
+	
 	//スワップチェイン
 	IDXGISwapChain* GetSC()
 	{

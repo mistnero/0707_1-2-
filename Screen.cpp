@@ -1,19 +1,15 @@
 #include <iostream>
-#include <windows.h>
+#include <Windows.h>
 #include <d3d11.h>
 #include <dxgi.h>
-
-//追加で必要なインクルード
-#include <d2d1.h>
-#include <dwrite.h>
 
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
 
-//
-#pragma comment(lib,"d2d1.lib")
-#pragma comment(lib,"dwrite.lib")
+
+//文字用スクリーンクラス
+#include "ScreenWrite.h"
 
 //スクリーンヘッダーをインクルード
 #include "Screen.h"
@@ -77,17 +73,17 @@ bool Screen::Init(HWND hwnd)
 	//デバイスとスワップチェインの作成
 	HRESULT hr = 
 	D3D11CreateDeviceAndSwapChain(
-		NULL,
+		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
-		NULL,
-		D3D11_CREATE_DEVICE_DEBUG,
-		NULL,
-		NULL,
+		nullptr,
+		0,
+		nullptr,
+		0,
 		D3D11_SDK_VERSION,
 		&scd,
 		&m_sc,
 		&m_device,
-		NULL,
+		nullptr,
 		&m_dc);
 	//失敗した場合
 	if (FAILED(hr))
@@ -147,10 +143,14 @@ void Screen::FirstLoop(float col[])
 	float clearColor[4] = { col[0], col[1], col[2], col[3] };
 	//描画色でクリア
 	m_dc->ClearRenderTargetView(m_rtv, clearColor);
+
+	
 }
 
 void Screen::FinalLoop()
 {
 	//スワップチェインのプレゼント
 	m_sc->Present(1, 0);
+
+	
 }
