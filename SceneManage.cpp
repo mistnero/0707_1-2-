@@ -14,7 +14,8 @@
 //コンストラクター
 SceneManage::SceneManage()
 {
-	this->scene_num = 0;
+	this->scene_num = SCENE_START;
+	this->select = SCENE_START;
 	this->color = nullptr;
 
 }
@@ -30,17 +31,15 @@ void SceneManage::SceneUpdate()
 {
 	switch (this->scene_num)
 	{
-	case 0:
+	case SCENE_START:
 		//スタート画面
 		SceneStart::GetInstance().Update();
 		this->color = SceneStart::GetInstance().ColorReturn();
-		if (KeySignal::GetInstance().PushKey(VK_SPACE))
-		{
-			this->scene_num = 1;
-		}
+		
+		
 		break;
 
-	case 1:
+	case SCENE_PLAY:
 		//プレイ画面
 		ScenePlay::GetInstance().Update();
 		this->color = ScenePlay::GetInstance().ColorReturn();
@@ -50,10 +49,15 @@ void SceneManage::SceneUpdate()
 		}
 		break;
 
-	case 2:
+	case SCENE_END:
 		//エンディング画面
 		this->color = SceneEnd::GetInstance().ColorReturn();
 		SceneEnd::GetInstance().Update();
+		break;
+
+	case SCENE_ENDFIN:
+
+
 		break;
 	}
 }
@@ -80,7 +84,22 @@ void SceneManage::SceneDraw()
 	}
 }
 
+//シーン変更
+void SceneManage::SceneChange(int scene)
+{
+	this->scene_num = scene;
+}
+
 float* SceneManage::SCReturn()
 {
 	return this->color;
+}
+
+bool SceneManage::LoopEnd()
+{
+	if (this->scene_num == SCENE_ENDFIN)
+	{
+		return true;
+	}
+	return false;
 }

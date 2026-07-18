@@ -60,7 +60,7 @@ bool Screen::Init(HWND hwnd)
 	scd.BufferDesc.Width = 0; 
 	scd.BufferDesc.Height = 0;
 	//バッファのフォーマットの設定
-	scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	scd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
 	//リフレッシュレートの設定
 	scd.BufferDesc.RefreshRate.Numerator = 60;	//60Hz
 	scd.BufferDesc.RefreshRate.Denominator = 1;	//分母
@@ -80,7 +80,7 @@ bool Screen::Init(HWND hwnd)
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
 		nullptr,
-		0,
+		D3D11_CREATE_DEVICE_BGRA_SUPPORT,
 		nullptr,
 		0,
 		D3D11_SDK_VERSION,
@@ -149,7 +149,6 @@ bool Screen::Init(HWND hwnd)
 void Screen::FirstLoop(float col[])
 {
 	SceneManage::GetInstance().SceneUpdate();
-	//	SceneManage::GetInstance().SceneDraw();
 
 	this->color = SceneManage::GetInstance().SCReturn();
 	//描画色でクリア
@@ -157,6 +156,7 @@ void Screen::FirstLoop(float col[])
 	//文字用の処理
 	ScreenWrite::GetInstance().FtLoop();
 	
+	SceneManage::GetInstance().SceneDraw();
 }
 
 void Screen::FinalLoop()

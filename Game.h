@@ -11,6 +11,8 @@
 //スクリーンクラス
 #include "Screen.h"
 
+//シーンマネージクラス
+#include "SceneManage.h"
 
 //キーシグナルクラス
 #include "KeySignal.h"

@@ -21,8 +21,21 @@ private:
 	//コンストラクター
 	SceneManage();
 
+
+	enum
+	{
+		SCENE_START,	//タイトル
+		SCENE_PLAY,		//プレイ画面
+		SCENE_END,		//エンディング
+		SCENE_ENDFIN	//終了
+	};
+
+
+
 	//シーン用
 	int scene_num;
+	//シーン選択
+	int select;
 	//色用
 	float* color;
 
@@ -47,6 +60,12 @@ public:
 	//シーンごとの描画
 	void SceneDraw();
 
+	//シーン変更
+	void SceneChange(int scene);
+
 	float* SCReturn();
+
+	//ゲームループを終了させるための関数
+	bool LoopEnd();
 
 };

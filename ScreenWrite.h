@@ -44,6 +44,11 @@ private:
 	//単一カラー
 	ID2D1SolidColorBrush* m_brush;
 
+	//文字サイズ
+	float font_size;
+	
+	
+
 public:
 	//明示的禁止
 	ScreenWrite(const ScreenWrite&) = delete;
@@ -56,11 +61,17 @@ public:
 		return instance;
 	}
 
+
+	//デストラクタ
+	~ScreenWrite();
+
+
 	//文字用の初期化
-	void Init(HWND hnd, ID3D11Device* device, IDXGISwapChain* sc);
+	bool Init(HWND hnd, ID3D11Device* device, IDXGISwapChain* sc);
 
 	//文字描画
 	void Draw(const wchar_t* text, float x, float y);
+	
 
 	//Screenクラスの最初のループで使う関数
 	void FtLoop();
@@ -68,6 +79,13 @@ public:
 	//Screenクラスの最後のループで使う関数
 	void FlLoop();
 
-	//デストラクタ
-	~ScreenWrite();
+	//文字のサイズを変更する
+	void FontSize(float size);
+
+	//文字のカラーを変更する
+	void FontColor(D2D1::ColorF color);
+
+	//図形もここで
+	//四角
+	void LineBox(float x1, float y1, float x2, float y2);
 };

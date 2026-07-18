@@ -13,7 +13,13 @@ protected:
 	//色変更
 	void ColorChange(float r, float g, float b, float a);
 
-
+	enum
+	{
+		SCENE_START,	//タイトル
+		SCENE_PLAY,		//プレイ画面
+		SCENE_END,		//エンディング
+		SCENE_ENDFIN	//終了
+	};
 
 public:
 	//色を返す

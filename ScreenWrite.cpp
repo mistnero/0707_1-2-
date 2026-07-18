@@ -17,10 +17,10 @@
 #pragma comment(lib,"dwrite.lib")
 
 
-
-
 //スクリーンライトヘッダー
 #include "ScreenWrite.h"
+
+#define DPI_XY 96.0f;
 
 
 ScreenWrite::ScreenWrite()
@@ -32,6 +32,9 @@ ScreenWrite::ScreenWrite()
 	m_wf = nullptr;
 	m_tf = nullptr;
 	m_brush = nullptr;
+
+	font_size = 32.0f;
+	
 }
 
 ScreenWrite::~ScreenWrite()
@@ -46,7 +49,7 @@ ScreenWrite::~ScreenWrite()
 }
 
 //初期化
-void ScreenWrite::Init(HWND hnd,ID3D11Device* device, IDXGISwapChain* sc)
+bool ScreenWrite::Init(HWND hnd,ID3D11Device* device, IDXGISwapChain* sc)
 {
 	//DXGIの取得
 	IDXGIDevice* dxgid = nullptr;
@@ -56,12 +59,34 @@ void ScreenWrite::Init(HWND hnd,ID3D11Device* device, IDXGISwapChain* sc)
 		__uuidof(IDXGIDevice), (void**)&dxgid
 	);
 
+	//失敗した場合
+	if (FAILED(hr))
+	{
+		MessageBox(nullptr,
+			L"CreateDXGIDevice Failed",
+			L"Error",
+			MB_OK);
+		return false;
+	}
+
 
 	//２Ｄファクトリ生成
 	hr = D2D1CreateFactory
 	(
-		D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_d2df
+		D2D1_FACTORY_TYPE_SINGLE_THREADED, 
+		__uuidof(ID2D1Factory1),nullptr,
+		reinterpret_cast<void**>(&m_d2df)
 	);
+
+	//失敗した場合
+	if (FAILED(hr))
+	{
+		MessageBox(nullptr,
+			L"CreateFactory Failed",
+			L"Error",
+			MB_OK);
+		return false;
+	}
 
 	//２Ｄデバイス作成
 	hr = m_d2df->CreateDevice
@@ -69,11 +94,31 @@ void ScreenWrite::Init(HWND hnd,ID3D11Device* device, IDXGISwapChain* sc)
 		dxgid, &m_d2dd
 	);
 
+	//失敗した場合
+	if (FAILED(hr))
+	{
+		MessageBox(nullptr,
+			L"CreateDevice Failed",
+			L"Error",
+			MB_OK);
+		return false;
+	}
+
 	//２Ｄデバイスコンテキスト作成
 	hr = m_d2dd->CreateDeviceContext
 	(
 		D2D1_DEVICE_CONTEXT_OPTIONS_NONE, &m_d2ddc
 	);
+
+	//失敗した場合
+	if (FAILED(hr))
+	{
+		MessageBox(nullptr,
+			L"CreateDC Failed",
+			L"Error",
+			MB_OK);
+		return false;
+	}
 
 	//バックバッファをDXGIサーフェイスとして取得
 	IDXGISurface* dxgis = nullptr;
@@ -84,13 +129,9 @@ void ScreenWrite::Init(HWND hnd,ID3D11Device* device, IDXGISwapChain* sc)
 	);
 
 	//２Ｄビットマップ作成
-	FLOAT dpiX;
-	FLOAT dpiY;
+	FLOAT dpiX = DPI_XY;
+	FLOAT dpiY = DPI_XY;
 
-	m_d2df->GetDesktopDpi
-	(
-		&dpiX, &dpiY
-	);
 
 	D2D1_BITMAP_PROPERTIES1 bmp1 = D2D1::BitmapProperties1
 	(
@@ -122,7 +163,7 @@ void ScreenWrite::Init(HWND hnd,ID3D11Device* device, IDXGISwapChain* sc)
 		DWRITE_FONT_WEIGHT_NORMAL,
 		DWRITE_FONT_STYLE_NORMAL,
 		DWRITE_FONT_STRETCH_NORMAL,
-		32.0f, L"ja-jp", &m_tf
+		font_size, L"ja-jp", &m_tf
 	);
 
 	//文字カラー
@@ -130,6 +171,8 @@ void ScreenWrite::Init(HWND hnd,ID3D11Device* device, IDXGISwapChain* sc)
 	(
 		D2D1::ColorF(D2D1::ColorF::White), &m_brush
 	);
+
+	return true;
 }
 
 void ScreenWrite::Draw(const wchar_t* text, float x, float y)
@@ -147,6 +190,8 @@ void ScreenWrite::Draw(const wchar_t* text, float x, float y)
 
 }
 
+
+
 void ScreenWrite::FtLoop()
 {
 	m_d2ddc->BeginDraw();
@@ -157,3 +202,46 @@ void ScreenWrite::FlLoop()
 	m_d2ddc->EndDraw();
 }
 
+//文字のサイズを変更する
+void ScreenWrite::FontSize(float size)
+{
+	if(font_size==size)
+	{
+		return;
+	}
+
+	font_size = size;
+
+	if (m_tf)
+	{
+		m_tf->Release();
+		m_tf = nullptr;
+	}
+
+	m_wf->CreateTextFormat
+	(
+		L"Meiryo", nullptr,
+		DWRITE_FONT_WEIGHT_NORMAL,
+		DWRITE_FONT_STYLE_NORMAL,
+		DWRITE_FONT_STRETCH_NORMAL,
+		font_size, L"ja-jp", &m_tf
+	);
+
+}
+
+//文字のカラーを変更する
+void ScreenWrite::FontColor(D2D1::ColorF color)
+{
+	m_brush->SetColor(color);
+}
+
+//四角
+void ScreenWrite::LineBox(float x1, float y1, float x2, float y2)
+{
+	D2D1_RECT_F rect =
+	{
+		x1,y1,x2,y2
+	};
+
+	m_d2ddc->DrawRectangle(rect, m_brush, 2.0f);
+}

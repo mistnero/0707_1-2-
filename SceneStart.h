@@ -12,6 +12,15 @@ private:
 	//コンストラクター
 	SceneStart();
 
+	//選択する枠サイズ
+	int box_x[2];
+	int box_y[2];
+
+	//シーン選択
+	int select;
+
+	
+
 public:
 	//デストラクター
 	~SceneStart();

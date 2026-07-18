@@ -7,7 +7,6 @@
 #pragma comment(lib, "dxgi.lib")
 
 
-
 //ゲームヘッダーをインクルード
 #include "Game.h"
 
@@ -81,7 +80,13 @@ int Game::Loop(MSG msg)
 			Screen::GetInstance().FinalLoop();
 		}
 
+		//Qキーで終了
 		if (KeySignal::GetInstance().End())
+		{
+			return 0;
+		}
+		//シーンで終了しても終了
+		if (SceneManage::GetInstance().LoopEnd())
 		{
 			return 0;
 		}
