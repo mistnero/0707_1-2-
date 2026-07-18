@@ -88,4 +88,5 @@ int Game::Loop(MSG msg)
 		}
 	}
 	
+	return 0;
 }

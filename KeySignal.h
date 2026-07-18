@@ -14,6 +14,7 @@ private:
 	//コンストラクタ
 	KeySignal();
 
+	bool once_key[256];
 
 public:
 	//デストラクタ
@@ -31,4 +32,8 @@ public:
 	}
 
 	bool End();
+
+	//キー入力
+	bool PushKey(int key);
+	bool LongPushKey(int key);
 };

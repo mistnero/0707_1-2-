@@ -9,6 +9,9 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
 
+
+
+
 //画面表示のためのクラス
 class Screen
 {
@@ -29,6 +32,9 @@ private:
 	IDXGISwapChain* m_sc;
 	//レンダーターゲットビュー
 	ID3D11RenderTargetView* m_rtv;
+
+	//色
+	float* color;
 
 public:
 	//デストラクタ
