@@ -49,6 +49,8 @@ public:
 
 	void Init(HWND hnd);
 
+	void Draw(const wchar_t* text, float x, float y);
+
 	//デストラクタ
 	~ScreenWrite();
 };

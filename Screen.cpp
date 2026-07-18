@@ -8,8 +8,6 @@
 #pragma comment(lib, "dxgi.lib")
 
 
-//文字用スクリーンクラス
-#include "ScreenWrite.h"
 
 //スクリーンヘッダーをインクルード
 #include "Screen.h"

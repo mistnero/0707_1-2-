@@ -85,3 +85,21 @@ void ScreenWrite::Init(HWND hnd)
 		D2D1::ColorF(D2D1::ColorF::White), &m_brush
 	);
 }
+
+void ScreenWrite::Draw(const wchar_t* text, float x, float y)
+{
+	D2D1_RECT_F rect =
+	{
+		x,y,x + 1000.0f,y + 100.0f
+	};
+
+	m_d2drt->BeginDraw();
+
+	m_d2drt->DrawTextW
+	(
+		text, (UINT32)wcslen(text), m_tf, rect, m_brush
+	);
+
+	m_d2drt->EndDraw();
+}
+

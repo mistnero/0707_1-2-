@@ -6,6 +6,8 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
 
+
+
 //ゲームヘッダーをインクルード
 #include "Game.h"
 
@@ -56,7 +58,10 @@ void Game::Setting(HINSTANCE hInst, int show)
 			800, 600, nullptr, nullptr, hInst, nullptr);
 	ShowWindow(this->m_hwnd, show);
 
+	//スクリーンクラスの初期化
 	Screen::GetInstance().Init(this->m_hwnd);
+	//文字描画クラスの初期化
+	ScreenWrite::GetInstance().Init(this->m_hwnd);
 }
 
 //ゲームループ

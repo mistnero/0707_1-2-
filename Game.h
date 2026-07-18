@@ -10,6 +10,9 @@
 
 //スクリーンクラス
 #include "Screen.h"
+//文字用スクリーンクラス
+#include "ScreenWrite.h"
+
 //キーシグナルクラス
 #include "KeySignal.h"
 
