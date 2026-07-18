@@ -8,7 +8,7 @@ protected:
 
 
 	//背景カラー
-	float color[4];
+	float color[4] = {};
 
 	//色変更
 	void ColorChange(float r, float g, float b, float a);

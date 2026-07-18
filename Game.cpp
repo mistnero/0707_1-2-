@@ -60,8 +60,7 @@ void Game::Setting(HINSTANCE hInst, int show)
 
 	//スクリーンクラスの初期化
 	Screen::GetInstance().Init(this->m_hwnd);
-	//文字描画クラスの初期化
-	ScreenWrite::GetInstance().Init(this->m_hwnd);
+	
 }
 
 //ゲームループ

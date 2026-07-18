@@ -96,13 +96,8 @@ bool Screen::Init(HWND hwnd)
 		return false;
 	}
 
-	//DXGIの取得
-	IDXGIDevice* dxgid = nullptr;
-
-	hr = m_device->QueryInterface
-	(
-		__uuidof(IDXGIDevice), (void**)&dxgid
-	);
+	//文字用の初期化
+	ScreenWrite::GetInstance().Init(hwnd, m_device, m_sc);
 
 	////バックバッファの取得
 	ID3D11Texture2D* backBuffer = nullptr;
@@ -159,12 +154,16 @@ void Screen::FirstLoop(float col[])
 	this->color = SceneManage::GetInstance().SCReturn();
 	//描画色でクリア
 	m_dc->ClearRenderTargetView(m_rtv, this->color);
-
+	//文字用の処理
+	ScreenWrite::GetInstance().FtLoop();
 	
 }
 
 void Screen::FinalLoop()
 {
+	//文字用の処理
+	ScreenWrite::GetInstance().FlLoop();
+
 	//スワップチェインのプレゼント
 	m_sc->Present(1, 0);
 

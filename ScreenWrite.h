@@ -25,13 +25,17 @@ private:
 	ScreenWrite();
 
 	//２Ｄ描画のリソース工場
-	ID2D1Factory* m_d2df;
+	ID2D1Factory1* m_d2df;
 	////描画(使用しない)
 	//ID2D1HwndRenderTarget* m_d2drt;
-	//
+	
+	//デバイス
 	ID2D1Device* m_d2dd;
-	//
-	ID2D1deviceContext* m_d2ddc;
+	//デバイスコンテキスト
+	ID2D1DeviceContext* m_d2ddc;
+
+	//ビットマップ
+	ID2D1Bitmap1* m_d2dtb;
 
 	//文字リソース工場
 	IDWriteFactory* m_wf;
@@ -52,11 +56,17 @@ public:
 		return instance;
 	}
 
-	void Init(HWND hnd);
+	//文字用の初期化
+	void Init(HWND hnd, ID3D11Device* device, IDXGISwapChain* sc);
 
+	//文字描画
 	void Draw(const wchar_t* text, float x, float y);
 
-	HRESULT CreateD2DFaD();
+	//Screenクラスの最初のループで使う関数
+	void FtLoop();
+
+	//Screenクラスの最後のループで使う関数
+	void FlLoop();
 
 	//デストラクタ
 	~ScreenWrite();

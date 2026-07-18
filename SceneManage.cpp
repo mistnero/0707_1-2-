@@ -15,6 +15,7 @@
 SceneManage::SceneManage()
 {
 	this->scene_num = 0;
+	this->color = nullptr;
 
 }
 
