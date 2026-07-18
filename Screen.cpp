@@ -96,6 +96,14 @@ bool Screen::Init(HWND hwnd)
 		return false;
 	}
 
+	//DXGIの取得
+	IDXGIDevice* dxgid = nullptr;
+
+	hr = m_device->QueryInterface
+	(
+		__uuidof(IDXGIDevice), (void**)&dxgid
+	);
+
 	////バックバッファの取得
 	ID3D11Texture2D* backBuffer = nullptr;
 	//スワップチェインからバックバッファを取得

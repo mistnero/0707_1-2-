@@ -5,7 +5,7 @@
 #include <d3d11.h>
 #include <dxgi.h>
 //追加で必要なインクルード
-#include <d2d1.h>
+#include <d2d1_1.h>
 #include <dwrite.h>
 
 
@@ -26,8 +26,13 @@ private:
 
 	//２Ｄ描画のリソース工場
 	ID2D1Factory* m_d2df;
-	//描画
-	ID2D1HwndRenderTarget* m_d2drt;
+	////描画(使用しない)
+	//ID2D1HwndRenderTarget* m_d2drt;
+	//
+	ID2D1Device* m_d2dd;
+	//
+	ID2D1deviceContext* m_d2ddc;
+
 	//文字リソース工場
 	IDWriteFactory* m_wf;
 	//書式情報管理
@@ -50,6 +55,8 @@ public:
 	void Init(HWND hnd);
 
 	void Draw(const wchar_t* text, float x, float y);
+
+	HRESULT CreateD2DFaD();
 
 	//デストラクタ
 	~ScreenWrite();

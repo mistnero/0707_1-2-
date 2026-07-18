@@ -103,3 +103,6 @@ void ScreenWrite::Draw(const wchar_t* text, float x, float y)
 	m_d2drt->EndDraw();
 }
 
+//ファクトリーとデバイスの作成
+HRESULT CreateD2DFaD();
+

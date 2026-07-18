@@ -6,6 +6,10 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
 
+
+//ScreenWrite クラス
+#include "ScreenWrite.h"
+
 //ScenePlayヘッダーのインクルード
 #include "ScenePlay.h"
 
@@ -21,7 +25,8 @@ ScenePlay::~ScenePlay()
 
 void ScenePlay::Update()
 {
-
+	
+	ScreenWrite::GetInstance().Draw(L"Play", 100.0f, 100.0f);
 }
 
 void ScenePlay::Draw()

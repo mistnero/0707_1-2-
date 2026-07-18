@@ -19,11 +19,7 @@ class SceneManage
 {
 private:
 	//コンストラクター
-	SceneManage()
-	{
-		this->scene_num = 0;
-
-	}
+	SceneManage();
 
 	//シーン用
 	int scene_num;
@@ -32,7 +28,7 @@ private:
 
 public:
 	//デストラクター
-	~SceneManage() {}
+	~SceneManage();
 
 	//明示的禁止
 	SceneManage(const SceneManage&) = delete;
@@ -46,63 +42,11 @@ public:
 	}
 
 	//シーンごとの更新
-	void SceneUpdate()
-	{
-		switch (scene_num)
-		{
-		case 0:
-			//スタート画面
-			SceneStart::GetInstance().Update();
-			this->color = SceneStart::GetInstance().ColorReturn();
-			if (KeySignal::GetInstance().PushKey(VK_SPACE))
-			{
-				this->scene_num = 1;
-			}
-			break;
-
-		case 1:
-			//プレイ画面
-			ScenePlay::GetInstance().Update();
-			this->color = ScenePlay::GetInstance().ColorReturn();
-			if (KeySignal::GetInstance().PushKey(VK_SPACE))
-			{
-				this->scene_num = 2;
-			}
-			break;
-
-		case 2:
-			//エンディング画面
-			this->color = SceneEnd::GetInstance().ColorReturn();
-			SceneEnd::GetInstance().Update();
-			break;
-		}
-	}
+	void SceneUpdate();
 
 	//シーンごとの描画
-	void SceneDraw()
-	{
-		switch (scene_num)
-		{
-		case 0:
-			//スタート画面
-			SceneStart::GetInstance().Draw();
-			break;
+	void SceneDraw();
 
-		case 1:
-			//プレイ画面
-			ScenePlay::GetInstance().Draw();
-			break;
-
-		case 2:
-			//エンディング画面
-			SceneEnd::GetInstance().Draw();
-			break;
-		}
-	}
-
-	float* SCReturn()
-	{
-		return this->color;
-	}
+	float* SCReturn();
 
 };

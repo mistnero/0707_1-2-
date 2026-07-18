@@ -127,6 +127,7 @@
     <ClCompile Include="KeySignal.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SceneEnd.cpp" />
+    <ClCompile Include="SceneManage.cpp" />
     <ClCompile Include="SceneOne.cpp" />
     <ClCompile Include="ScenePlay.cpp" />
     <ClCompile Include="SceneStart.cpp" />
