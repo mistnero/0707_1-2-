@@ -135,6 +135,8 @@ bool Screen::Init(HWND hwnd)
 	//•`‰æ—Ìˆæ‚ðÝ’è
 	m_dc->RSSetViewports(1, &vp);
 
+
+	return true;
 }
 
 void Screen::FirstLoop(float col[])
