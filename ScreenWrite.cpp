@@ -189,7 +189,24 @@ void ScreenWrite::Draw(const wchar_t* text, float x, float y)
 	);
 
 }
+//”’l•ÏŠ·•`‰æ
+void ScreenWrite::ChangeDrawV(int value, float x, float y)
+{
+	wchar_t text[32];
 
+	swprintf(text,32, L"%d", value);
+
+	Draw(text, x, y);
+}
+//ƒLƒƒƒ‰”z—ñ•ÏŠ·•`‰æ
+void ScreenWrite::ChangeDrawC(char text[], float x, float y)
+{
+	wchar_t wtext[64];
+
+	mbstowcs_s(nullptr, wtext, text, _TRUNCATE);
+
+	Draw(wtext, x, y);
+}
 
 
 void ScreenWrite::FtLoop()
@@ -244,4 +261,15 @@ void ScreenWrite::LineBox(float x1, float y1, float x2, float y2)
 	};
 
 	m_d2ddc->DrawRectangle(rect, m_brush, 2.0f);
+}
+//“h‚è‚Â‚Ô‚µ‰~
+void ScreenWrite::FillCircle(float x, float y, float radius)
+{
+	D2D1_ELLIPSE circle =
+	{
+		D2D1::Point2F(x,y),
+		radius,radius
+	};
+
+	m_d2ddc->FillEllipse(circle, m_brush);
 }

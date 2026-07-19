@@ -71,7 +71,10 @@ public:
 
 	//文字描画
 	void Draw(const wchar_t* text, float x, float y);
-	
+	//数値変換描画
+	void ChangeDrawV(int value, float x, float y);
+	//キャラ配列変換描画
+	void ChangeDrawC(char text[], float x, float y);
 
 	//Screenクラスの最初のループで使う関数
 	void FtLoop();
@@ -88,4 +91,6 @@ public:
 	//図形もここで
 	//四角
 	void LineBox(float x1, float y1, float x2, float y2);
+	//塗りつぶし円
+	void FillCircle(float x, float y, float radius);
 };
