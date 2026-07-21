@@ -11,6 +11,27 @@ const EnemyData EnemyFactory::EnemyTable[] =
 	{3,"Orc",30,15,8,3,30,15,0.1f},
 	{4,"Dragon",100,50,20,5,1000,1000,0.2f}
 };
+/*
+//番号
+	int ID;
+	//名前
+	const char Name[256];
+	//体力
+	int HP;
+	//攻撃力
+	int ATK;
+	//防御力
+	int DEF;
+	//速さ
+	int SPD;
+	//ドロップするゴールド
+	int Gold;
+	//経験値
+	int EXP;
+	//クリティカル確率
+	float Critical;
+*/
+
 const int EnemyFactory::EnemyTableSize = sizeof(EnemyTable) / sizeof(EnemyData);
 
 Enemy* EnemyFactory::CreateEnemy(int ID)

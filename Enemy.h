@@ -50,4 +50,11 @@ public:
 	//“G‚ğ‰~‚Å•`‰æ
 	void Draw(int num,float radius,D2D1::ColorF color);
 	void Draw(float radius);
+
+	//‘¬‚³‚ğ•Ô‚·
+	int GetSPD();
+	//Šl“¾ƒS[ƒ‹ƒh
+	int GetGold();
+	//Šl“¾ŒoŒ±’l
+	int GetEXP();
 };

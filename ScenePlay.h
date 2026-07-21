@@ -8,6 +8,8 @@
 //敵生成
 #include "Enemy.h"
 #include "EnemyFactory.h"
+//プレイヤー
+#include "Player.h"
 
 //シーンワンクラス
 #include "SceneOne.h"
@@ -26,6 +28,29 @@ private:
 	int select_id[3];
 	//エネミーの数を決める
 	int enemy_num;
+
+	//プレイヤー（パーティーなし）
+	std::unique_ptr<Player>player;
+
+	//ターン
+	int turn;
+	enum
+	{
+		//まだ
+		TURN_ZERO,
+		//プレイヤー
+		TURN_HERO,
+		//１番目のエネミー
+		TURN_ENEMY1,
+		//２番目のエネミー
+		TURN_ENEMY2,
+		//３番目のエネミー
+		TURN_ENEMY3
+	};
+	//何週目か
+	int round;
+	//何周したか
+	int round_record;
 
 public:
 	//明示的禁止

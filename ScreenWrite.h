@@ -7,6 +7,7 @@
 //追加で必要なインクルード
 #include <d2d1_1.h>
 #include <dwrite.h>
+#include <cstdarg>
 
 
 #pragma comment(lib, "d3d11.lib")
@@ -28,7 +29,7 @@ private:
 	ID2D1Factory1* m_d2df;
 	////描画(使用しない)
 	//ID2D1HwndRenderTarget* m_d2drt;
-	
+
 	//デバイス
 	ID2D1Device* m_d2dd;
 	//デバイスコンテキスト
@@ -46,8 +47,8 @@ private:
 
 	//文字サイズ
 	float font_size;
-	
-	
+
+
 
 public:
 	//明示的禁止
@@ -73,8 +74,10 @@ public:
 	void Draw(const wchar_t* text, float x, float y);
 	//数値変換描画
 	void ChangeDrawV(int value, float x, float y);
+	void ChangeDrawV(float x, float y, const wchar_t* format, ...);
 	//キャラ配列変換描画
 	void ChangeDrawC(char text[], float x, float y);
+	void ChangeDrawC(float x, float y, const wchar_t* format, char text[]);
 
 	//Screenクラスの最初のループで使う関数
 	void FtLoop();

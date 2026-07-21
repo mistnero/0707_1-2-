@@ -30,20 +30,32 @@ ScenePlay::ScenePlay()
 		//敵の位置を設定
 		enemy[ene]->SelectPos(ene, enemy_num);
 	}
-	
+	//ターンは決まっていない
+	turn = TURN_ZERO;
+	//１週目
+	round = 0;
+	//０周
+	round_record = 0;
 }
 
 ScenePlay::~ScenePlay()
 {
-
+	//ラウンド開始でｎ週目
+	if (round == round_record + 1)
+	{
+		//プレイヤーの速さ
+		int pl_spd=Player
+		//敵の速さ
+	}
 }
 
+//プレイ中の更新
 void ScenePlay::Update()
 {
 	
 	
 }
-
+//プレイ中の描画更新
 void ScenePlay::Draw()
 {
 	ScreenWrite::GetInstance().FontSize(32.0f);

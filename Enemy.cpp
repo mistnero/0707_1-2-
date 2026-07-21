@@ -31,8 +31,10 @@ Enemy::~Enemy()
 //ƒ_ƒ[ƒW‚ğó‚¯‚Ä“|‚³‚ê‚½‚©
 bool Enemy::DamageCheck(int attack)
 {
+	//ƒ_ƒ[ƒW‚ğDEF•ª‚Ì‚P‚É
+	int atk = attack / m_data.DEF;
 	//ƒ_ƒ[ƒW‚ğó‚¯‚é
-	m_hp -= attack;
+	m_hp -= atk;
 	if (m_hp < 0)
 	{
 		m_hp = 0;
@@ -129,30 +131,37 @@ void Enemy::SelectPos(int num, int max_num)
 	}
 }
 
+//‘¬‚³‚ğ•Ô‚·
+int Enemy::GetSPD()
+{
+	return m_data.SPD;
+}
+//Šl“¾ƒS[ƒ‹ƒh
+int Enemy::GetGold()
+{
+	return m_data.Gold;
+}
+//Šl“¾ŒoŒ±’l
+int Enemy::GetEXP()
+{
+	return m_data.EXP;
+}
+
 //“G‚ğ‰~‚Å•`‰æ
 void Enemy::Draw(int num,float radius, D2D1::ColorF color)
 {
 	ScreenWrite::GetInstance().FontColor(color);
-	ScreenWrite::GetInstance().FontSize(18.0f);
-
-	ScreenWrite::GetInstance().Draw(L"ID", 0.0f, 20.0f + ((float)num * 180.0f));
-	ScreenWrite::GetInstance().Draw(L"Name", 0.0f, 40.0f + ((float)num * 180.0f));
-	ScreenWrite::GetInstance().Draw(L"HP", 0.0f, 60.0f + ((float)num * 180.0f));
-	ScreenWrite::GetInstance().Draw(L"ATK", 0.0f, 80.0f + ((float)num * 180.0f));
-	ScreenWrite::GetInstance().Draw(L"DEF", 0.0f, 100.0f + ((float)num * 180.0f));
-	ScreenWrite::GetInstance().Draw(L"SPD", 0.0f, 120.0f + ((float)num * 180.0f));
-	ScreenWrite::GetInstance().Draw(L"Gold", 0.0f, 140.0f + ((float)num * 180.0f));
-	ScreenWrite::GetInstance().Draw(L"EXP", 0.0f, 160.0f + ((float)num * 180.0f));
+	ScreenWrite::GetInstance().FontSize(14.0f);
 
 	
-	ScreenWrite::GetInstance().ChangeDrawV(m_data.ID, 100.0f, 20.0f + ((float)num * 180.0f));
-    ScreenWrite::GetInstance().ChangeDrawC(const_cast<char*>(m_data.Name), 100.0f, 40.0f+ ((float)num * 180.0f));
-	ScreenWrite::GetInstance().ChangeDrawV(m_data.HP, 100.0f, 60.0f+ ((float)num * 180.0f));
-	ScreenWrite::GetInstance().ChangeDrawV(m_data.ATK, 100.0f, 80.0f+ ((float)num * 180.0f));
-	ScreenWrite::GetInstance().ChangeDrawV(m_data.DEF, 100.0f, 100.0f+ ((float)num * 180.0f));
-	ScreenWrite::GetInstance().ChangeDrawV(m_data.SPD, 100.0f, 120.0f+ ((float)num * 180.0f));
-	ScreenWrite::GetInstance().ChangeDrawV(m_data.Gold, 100.0f, 140.0f+ ((float)num * 180.0f));
-	ScreenWrite::GetInstance().ChangeDrawV(m_data.EXP, 100.0f, 160.0f+ ((float)num * 180.0f));
+
+	ScreenWrite::GetInstance().ChangeDrawV(10.0f, 10.0f + ((float)num * 180.0f),
+		L"ID	:%d\n\nHP	:%d\nATK	:%d\nDEF	:%d\nSPD	:%d\nGold	:%d\nEXP	:%d",
+		m_data.ID, m_data.HP, m_data.ATK, m_data.DEF, m_data.SPD, m_data.Gold, m_data.EXP
+	);
+	ScreenWrite::GetInstance().ChangeDrawC(10.0f, 10.0f + ((float)num * 180.0f), L"\nName	:%s", const_cast<char*>(m_data.Name));
+	
+	
 
 	ScreenWrite::GetInstance().FillCircle(d2d_x, d2d_y, radius);
 }

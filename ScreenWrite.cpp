@@ -192,21 +192,42 @@ void ScreenWrite::Draw(const wchar_t* text, float x, float y)
 //êîílïœä∑ï`âÊ
 void ScreenWrite::ChangeDrawV(int value, float x, float y)
 {
-	wchar_t text[32];
+	wchar_t text[64];
 
-	swprintf(text,32, L"%d", value);
+	swprintf_s(text,32, L"%d", value);
+
+	Draw(text, x, y);
+}
+void ScreenWrite::ChangeDrawV(float x, float y, const wchar_t* format, ...)
+{
+	wchar_t text[256];
+	va_list args;
+	va_start(args, format);
+
+	vswprintf_s(text, _countof(text), format, args);
 
 	Draw(text, x, y);
 }
 //ÉLÉÉÉâîzóÒïœä∑ï`âÊ
 void ScreenWrite::ChangeDrawC(char text[], float x, float y)
 {
-	wchar_t wtext[64];
+	wchar_t wtext[128];
 
 	mbstowcs_s(nullptr, wtext, text, _TRUNCATE);
 
 	Draw(wtext, x, y);
 }
+void ScreenWrite::ChangeDrawC(float x, float y, const wchar_t* format, char text[])
+{
+	wchar_t wtext[64];
+	wchar_t wtext2[128];
+
+	mbstowcs_s(nullptr, wtext, text, _TRUNCATE);
+	swprintf_s(wtext2, _countof(wtext2), format, wtext);
+
+	Draw(wtext2, x, y);
+}
+
 
 
 void ScreenWrite::FtLoop()
